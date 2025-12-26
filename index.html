@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+<meta charset="UTF-8">
+<title>إرسال رقم الهاتف</title>
+<style>
+body {
+  font-family: Arial;
+  background: #111;
+  color: #fff;
+  text-align: center;
+  padding-top: 50px;
+}
+input, button {
+  padding: 10px;
+  margin: 10px;
+  width: 250px;
+}
+button {
+  background: green;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+</style>
+</head>
+<body>
+
+<h2>أدخل رقم هاتفك</h2>
+<p>سيتم إرسال الرقم إلى تلغرام بموافقتك</p>
+
+<input type="tel" id="phone" placeholder="مثال: +213xxxxxxxxx">
+<br>
+<button onclick="sendToTelegram()">إرسال</button>
+
+<script>
+function sendToTelegram() {
+  const phone = document.getElementById("phone").value;
+  if (!phone) {
+    alert("أدخل رقم الهاتف");
+    return;
+  }
+
+  const botToken = "7415148537:AAHC9RSt6Ka4Ip34qTCleHx0YXtfGaERwIA";
+  const chatId = "6251932709";
+  const message = "📞 رقم هاتف جديد:\n" + phone;
+
+  fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      chat_id: chatId,
+      text: message
+    })
+  })
+  .then(res => alert("تم الإرسال بنجاح"))
+  .catch(err => alert("خطأ في الإرسال"));
+}
+</script>
+
+</body>
+</html>
